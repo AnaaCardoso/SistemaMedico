@@ -54,3 +54,4 @@ create or replace view consultas_cobertas_por_convenio_por_medico as
 			ESR.realizado_na_consulta is true
 			and ESR.id_exame = E.id) Y
 	on X.id = Y.id_consulta;
+
