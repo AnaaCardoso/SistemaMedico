@@ -4,16 +4,17 @@
 -- realizados, datas, valores envolvidos;
 create or replace view consultas_cobertas_por_convenio_por_medico as
 	select
-		X.cpf_medico	as	cpfMedico,
-		X.nome_fantasia	as	operadora,
-		X.tipo_plano	as	plano,
-		X.prenome		as	nomeCliente,
-		X.sobrenome		as	sobrenomeCLiente,
-		X.data_hora		as	dataConsulta,
-		X.valor			as	valorConsulta,
-		Y.nome 			as	exameRealizado,
-		Y.laudo 		as 	laudoExame,
-		Y.valor 		as	valorExame
+		X.cpf_medico			as	cpfMedico,
+		X.nome_fantasia			as	operadora,
+		X.tipo_plano			as	plano,
+		X.prenome				as	nomeCliente,
+		X.sobrenome				as	sobrenomeCLiente,
+		X.data_hora				as	dataConsulta,
+		X.valor					as	valorConsulta,
+		Y.nome 					as	exameRealizado,
+		Y.laudo 				as 	laudoExame,
+		Y.valor 				as	valorExame,
+		Y.percentual_cobertura 	as percentualCobertoExame
 	from
 		(select
 			C.cpf_medico,
@@ -46,6 +47,7 @@ create or replace view consultas_cobertas_por_convenio_por_medico as
 			E.nome,
 			ESR.id_consulta,
 			ESR.valor,
+			ESR.percentual_cobertura,
 			ESR.laudo
 		from 
 			exame_solicitado_realizado	ESR, 
