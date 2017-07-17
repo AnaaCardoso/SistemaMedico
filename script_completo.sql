@@ -389,12 +389,12 @@ create table consulta
 		constraint consulta_clinica_hospital_cnpj_fk
 			references clinica_hospital on delete restrict,
 	data_hora timestamp not null,
-	tipo varchar(20),
-	cod varchar(40)
-		constraint consulta_nota_fiscal_cod_fk
-			references nota_fiscal,
+	tipo varchar(1), -- P para particular e C para convenio
 	valor real,
 	recibo bytea,
+	cod_nota_fiscal varchar(40)
+		constraint consulta_nota_fiscal_cod_fk
+			references nota_fiscal on delete cascade,
 	id serial not null
 		constraint consulta_id_pk
 			primary key,
@@ -951,11 +951,24 @@ INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VA
 INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('34343434', '2016-08-12', '17:00:00', 450);
 INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('45454545', '2015-12-24', '11:00:00', 150);
 INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('56565656', '2017-01-03', '12:00:00', 850);
-INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, cod, valor, recibo, id, id_paciente_conveniado) VALUES ('95482399900', '11111111110', '72100888802011', '2016-04-06 15:30:00.000000', 'rotina', '23232323', 300, '4a', 4, null);
-INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, cod, valor, recibo, id, id_paciente_conveniado) VALUES ('22222222222', '13333333332', '72100888802012', '2016-08-12 17:00:00.000000', 'rotina', '34343434', 450, '4a', 5, null);
-INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, cod, valor, recibo, id, id_paciente_conveniado) VALUES ('21212121212', '55500011122', '72100888802013', '2015-12-24 11:00:00.000000', 'reconsulta', '45454545', 150, '4a', 6, null);
-INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, cod, valor, recibo, id, id_paciente_conveniado) VALUES ('32323232323', '66600011122', '72100888802014', '2017-01-03 12:00:00.000000', 'emergência', '56565656', 850, '4a', 7, null);
-INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, cod, valor, recibo, id, id_paciente_conveniado) VALUES ('88655726970', '88888888888', '72100888802010', '2016-02-03 13:00:00.298000', 'reconsulta', '12121212', 200, null, 8, null);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('99998888', '2016-02-05', '13:00:00', 200);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('77776666', '2016-04-08', '15:30:00', 300);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('55554444', '2016-08-15', '17:00:00', 450);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('33332222', '2015-12-28', '11:00:00', 150);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('11110000', '2017-01-02', '12:00:00', 850);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('66667777', '2016-04-08', '15:30:00', 300);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('44445555', '2016-08-15', '17:00:00', 450);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('22223333', '2015-12-28', '11:00:00', 150);
+INSERT INTO public.nota_fiscal (cod, data_emissao, hora_emissao, valor_total) VALUES ('00001111', '2017-01-02', '12:00:00', 850);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('95482399900', '11111111110', '72100888802011', '2016-04-09 12:30:00.000000', 'P', 300, '4a', '99998888', 4, null);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('22222222222', '13333333332', '72100888802012', '2016-08-16 15:00:00.000000', 'P', 450, '4a', '77776666', 5, null);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('21212121212', '55500011122', '72100888802013', '2015-12-21 17:00:00.000000', 'P', 150, '4a', '55554444', 6, null);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('32323232323', '66600011122', '72100888802014', '2017-01-07 13:00:00.000000', 'P', 850, '4a', '33332222', 7, null);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('88655726970', '88888888888', '72100888802010', '2016-02-08 12:00:00.298000', 'P', 200, null, '11110000', 8, null);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('95482399900', '11111111110', '72100888802011', '2016-04-02 11:30:00.000000', 'C', 350, '4a', '66667777', 9,  33);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('22222222222', '13333333332', '72100888802012', '2016-08-19 10:00:00.000000', 'C', 500, '4a', '44445555', 10, 34);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('21212121212', '55500011122', '72100888802013', '2015-12-21 18:00:00.000000', 'C', 200, '4a', '22223333', 11, 35);
+INSERT INTO public.consulta (cpf_paciente, cpf_medico, cnpj_hospital, data_hora, tipo, valor, recibo, cod_nota_fiscal, id, id_paciente_conveniado) VALUES ('88655726970', '88888888888', '72100888802010', '2016-02-08 12:00:00.298000', 'C', 250, null, '00001111', 13, 39);
 INSERT INTO public.telefone_pf (cpf, ddi, ddd, numero, tipo) VALUES ('66788827850', '55', '11', 'Fixo', '11111111');
 INSERT INTO public.telefone_pf (cpf, ddi, ddd, numero, tipo) VALUES ('88655726970', '55', '11', 'Fixo', '22222222');
 INSERT INTO public.telefone_pf (cpf, ddi, ddd, numero, tipo) VALUES ('95482399900', '55', '11', 'Fixo', '33333333');

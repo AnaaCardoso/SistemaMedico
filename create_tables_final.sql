@@ -342,12 +342,12 @@ create table consulta
 		constraint consulta_clinica_hospital_cnpj_fk
 			references clinica_hospital on delete restrict,
 	data_hora timestamp not null,
-	tipo varchar(20),
-	cod varchar(40)
-		constraint consulta_nota_fiscal_cod_fk
-			references nota_fiscal,
+	tipo varchar(1), -- P para particular e C para convenio
 	valor real,
 	recibo bytea,
+	cod_nota_fiscal varchar(40)
+		constraint consulta_nota_fiscal_cod_fk
+			references nota_fiscal on delete cascade,
 	id serial not null
 		constraint consulta_id_pk
 			primary key,
